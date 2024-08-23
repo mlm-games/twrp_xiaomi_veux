@@ -2,6 +2,8 @@
 
 The Poco X5 5G (codenamed "veux") is a High-range smartphone from Xiaomi.
 
+Ported from Poco X5
+
 ## Device specifications
 
 | Feature                 | Specification                                                                  |
