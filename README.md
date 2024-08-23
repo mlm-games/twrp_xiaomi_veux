@@ -2,7 +2,7 @@
 
 The Poco X4 Pro 5G (codenamed "veux") is a mid-range smartphone from Xiaomi.
 
-Ported from Poco X5
+Ported from Poco X5 (Thanks to them)
 
 ## Device specifications
 
