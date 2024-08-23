@@ -1,4 +1,4 @@
-#  TWRP Device Tree for Poco X5 5G (veux)
+#  TWRP Device Tree for Poco X4 Pro 5G (veux)
 
 The Poco X4 Pro 5G (codenamed "veux") is a mid-range smartphone from Xiaomi.
 
