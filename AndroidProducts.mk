@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/omni_moonstone.mk
+    $(LOCAL_DIR)/twrp_veux.mk
