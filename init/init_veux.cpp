@@ -52,11 +52,9 @@ void model_property_override(const std::string& device, const std::string& model
 
 void vendor_load_properties() {
     const std::string hwc = GetProperty("ro.boot.hwc", "");
-    if (hwc == "CN") {
-        model_property_override("peux", "Redmi Note 11E Pro");
-    } else if (hwc == "GL")  {
-        model_property_override("veux", "POCO X4 Pro");
+    if (hwc == "IN")  {
+        model_property_override("peux", "Redmi Note 11 Pro+ 5G");
     } else {
-        model_property_override("peux", "Redmi Note 11 Pro 5G");
+        model_property_override("veux", "POCO X4 Pro");
     }
 }

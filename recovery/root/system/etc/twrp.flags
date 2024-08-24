@@ -22,7 +22,7 @@
 
 # Persistent Firmware & Properties
 /persist               ext4    /dev/block/bootdevice/by-name/persist                              flags=display="Persist"
-/persist_image         emmc    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";flashimg=1
+/persist_image         emmc    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";flashimg=1;backup=1
 
 # Firmware partitions
 /bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0 wait"
@@ -34,4 +34,4 @@
 
 # Removable storage
 /usb_otg               auto    /dev/block/sdg1                            /dev/block/sdg          flags=fsflags=utf8;display="USB-OTG";storage;wipeingui;removable
-/external_sd   auto   /dev/block/mmcblk1p1                                    flags=display="MicroSD";storage;wipeingui;removable
+/external_sd           auto    /dev/block/mmcblk1p1                                               flags=display="MicroSD";storage;wipeingui;removable
