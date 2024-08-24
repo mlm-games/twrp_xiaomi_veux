@@ -244,7 +244,7 @@ SHRP_FLASH := 1
 
 # SHRP padding flag (for rounded corner devices only)
 # You have to change these values according to your device's roundness.
-Default (for RIGHT): 20
+# Default (for RIGHT): 20
 SHRP_STATUSBAR_RIGHT_PADDING := 5
 # Default (for LEFT): 20
 SHRP_STATUSBAR_LEFT_PADDING := 5
