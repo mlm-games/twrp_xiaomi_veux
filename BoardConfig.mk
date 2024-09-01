@@ -16,14 +16,14 @@
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
-SOONG_ALLOW_MISSING_DEPENDENCIES := true
-BUILD_BROKEN_DUP_RULES := true
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
+# SOONG_ALLOW_MISSING_DEPENDENCIES := true
+# BUILD_BROKEN_DUP_RULES := true
+# BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+# BUILD_BROKEN_MISSING_REQUIRED_MODULES := true
 
-# Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_veux
-TARGET_RECOVERY_DEVICE_MODULES := libinit_veux
+# # Init
+# TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_veux
+# TARGET_RECOVERY_DEVICE_MODULES := libinit_veux
 
 # Architecture
 TARGET_ARCH := arm64
@@ -45,6 +45,8 @@ ENABLE_SCHEDBOOST := true
 
 # Bootloader
 PRODUCT_PLATFORM := holi
+TARGET_BOOTLOADER_BOARD_NAME := holi
+TARGET_NO_BOOTLOADER := true
 TARGET_USES_UEFI := true
 
 # Platform
@@ -55,7 +57,6 @@ QCOM_BOARD_PLATFORMS += xiaomi_sm6375
 # Kernel
 VENDOR_CMDLINE := "androidboot.hardware=qcom \
                    androidboot.memcg=1 \
-		   androidboot.selinux=permissive \
                    androidboot.usbcontroller=4e00000.dwc3 \
                    cgroup.memory=nokmem,nosocket \
                    loop.max_part=7 \
@@ -66,6 +67,7 @@ VENDOR_CMDLINE := "androidboot.hardware=qcom \
                    iptable_raw.raw_before_defrag=1 \
                    ip6table_raw.raw_before_defrag=1 \
                    androidboot.init_fatal_reboot_target=recovery"
+#		   androidboot.selinux=permissive \
 
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_BASE := 0x00000000
@@ -80,12 +82,13 @@ BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --vendor_cmdline $(VENDOR_CMDLINE)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE) --board ""
 
+
 # BOARD_INCLUDE_DTB_IN_BOOTIMG := true
-#TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/$(PRODUCT_RELEASE_NAME)/dtb
-#BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/$(PRODUCT_RELEASE_NAME)/dtb
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
 # Kenel dtbo
-#BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/$(PRODUCT_RELEASE_NAME)/dtbo.img
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/$(PRODUCT_RELEASE_NAME)/dtbo.img
 
 #A/B
 BOARD_USES_RECOVERY_AS_BOOT := true
@@ -110,8 +113,8 @@ BOARD_AVB_ENABLE := true
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 134217728
-BOARD_DTBOIMG_PARTITION_SIZE := 8388608
-BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
+# BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+# BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 100663296
 
 # Dynamic Partition
 BOARD_SUPER_PARTITION_SIZE := 9126805504
@@ -132,7 +135,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 TARGET_COPY_OUT_VENDOR := vendor
 
 # Recovery
-TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
+# TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
 
@@ -148,6 +151,14 @@ TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
 TW_USE_FSCRYPT_POLICY := 2
+
+# Network
+BUILD_BROKEN_USES_NETWORK := true
+
+# Tool
+TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_LIBRESETPROP := true
 			     
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
@@ -164,10 +175,6 @@ TW_DEFAULT_BRIGHTNESS := 200
 TW_NO_SCREEN_BLANK := true
 TW_EXCLUDE_APEX := true
 TW_HAS_EDL_MODE := true
-TW_INCLUDE_REPACKTOOLS := true
-TW_INCLUDE_RESETPROP := true
-TW_INCLUDE_LIBRESETPROP := true
-TW_FRAMERATE := 120
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko"
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone20/temp"
 TW_BATTERY_SYSFS_WAIT_SECONDS := 5
