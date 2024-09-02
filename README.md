@@ -27,3 +27,6 @@ Ported from Poco X5's official twrp (Thanks to them)
 | Front Camera            | 16 MP, f/2.4, (wide)                                                           |
 | Fingerprint             | Side-mounted                                                                   |
 | Sensors                 | Accelerometer, Gyro, Proximity, Compass                                        |
+
+
+Positron kernel source: https://github.com/dereference23/kernel_xiaomi_sm6375
