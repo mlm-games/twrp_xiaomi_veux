@@ -293,3 +293,49 @@ SHRP_FLASH_MAX_BRIGHTNESS := 255
 # Useful to save space for devices with a smaller recovery partition
 # Default (if not set) is full theming support
 # SHRP_LITE := true
+
+
+# OrangeFox flags
+
+# screen settings
+OF_SCREEN_H := 2400
+OF_STATUS_H := 95
+OF_STATUS_INDENT_LEFT := 56
+OF_STATUS_INDENT_RIGHT := 48
+OF_ALLOW_DISABLE_NAVBAR := 0
+OF_CLOCK_POS := 1
+
+# other stuff
+OF_IGNORE_LOGICAL_MOUNT_ERRORS := 1
+OF_USE_GREEN_LED := 0
+OF_QUICK_BACKUP_LIST := /boot;/data;
+OF_ENABLE_LPTOOLS := 1
+OF_NO_TREBLE_COMPATIBILITY_CHECK := 1
+
+# default keymaster service version
+OF_DEFAULT_KEYMASTER_VERSION := 4.1
+
+# flashlight
+OF_FL_PATH1 := /system/etc/flashlight
+
+# ensure that /sdcard is bind-unmounted before f2fs data repair or format
+OF_UNBIND_SDCARD_F2FS := 1
+
+# number of list options before scrollbar creation
+OF_OPTIONS_LIST_NUM := 9
+
+# don't spam the console with loop errors
+OF_LOOP_DEVICE_ERRORS_TO_LOG := 1
+
+# A/B with recovery partition
+OF_AB_DEVICE_WITH_RECOVERY_PARTITION := 1
+
+# don't keep log history - only use for Stable releases
+# OF_DONT_KEEP_LOG_HISTORY := 1
+
+# automatically wipe /metadata after formatting /data (doesn't seem necessary here)
+# OF_WIPE_METADATA_AFTER_DATAFORMAT := 1
+
+# use lz4 compression (don't duplicate the setting - already set by "BOARD_RAMDISK_USE_LZ4 := true")
+# OF_USE_LZ4_COMPRESSION := 1
+#
