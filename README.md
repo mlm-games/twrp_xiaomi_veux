@@ -2,7 +2,7 @@
 
 ## Does not work right now... WIP
 
-The Poco X4 Pro 5G (codenamed "veux") is a mid-range smartphone from Xiaomi.(Flash in vendor_boot)
+The Poco X4 Pro 5G (codenamed "veux") is a mid-range smartphone from Xiaomi.(Flash in boot_a and b, for stock, vendor_boot for some custom roms)
 
 Ported from Poco X5's official twrp (Thanks to them)
 
