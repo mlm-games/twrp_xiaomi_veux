@@ -36,7 +36,7 @@ jobs:
         DEVICE_TREE_BRANCH: 'ofox'
         DEVICE_NAME: 'veux'
         DEVICE_PATH: 'device/xiaomi/veux'
-        BUILD_TARGET: 'vendor_boot'
+        BUILD_TARGET: 'vendorboot'
 
     - name: Upload to Release        # Github artifact action eats your space even if you delete the artifacts :\
       uses: softprops/action-gh-release@v2
