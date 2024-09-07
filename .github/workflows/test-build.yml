@@ -30,7 +30,7 @@ jobs:
       id: build
       with:
         MANIFEST_BRANCH: '12.1'
-        DEVICE_TREE: ${{ github.repository }}
+        DEVICE_TREE: 'https://github.com/${{ github.repository }}'
         DEVICE_TREE_BRANCH: ${{ github.ref_name }}
         DEVICE_NAME: 'veux'
         DEVICE_PATH: 'device/xiaomi/veux'
