@@ -6,8 +6,6 @@ on:
   pull_request: 
     branches:  "**"
 
-
-
 jobs:
   build:
     name: Build OFRP by ${{ github.actor }}
@@ -32,13 +30,13 @@ jobs:
       id: build
       with:
         MANIFEST_BRANCH: '12.1'
-        DEVICE_TREE: 'https://github.com/mlm-games/shrp_xiaomi_veux'
-        DEVICE_TREE_BRANCH: 'ofox'
+        DEVICE_TREE: ${{ github.repository }}
+        DEVICE_TREE_BRANCH: ${{ github.ref_name }}
         DEVICE_NAME: 'veux'
         DEVICE_PATH: 'device/xiaomi/veux'
         BUILD_TARGET: 'boot'
 
-    - name: Upload to Release        # Github artifact action eats your space even if you delete the artifacts :\
+    - name: Upload to Release        # Github artifact action (used to?) eats your space even if you delete the artifacts :\
       uses: softprops/action-gh-release@v2
       if: success()
       with:
