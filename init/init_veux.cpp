@@ -51,10 +51,29 @@ void model_property_override(const std::string& device, const std::string& model
 }
 
 void vendor_load_properties() {
-    const std::string hwc = GetProperty("ro.boot.hwc", "");
-    if (hwc == "IN")  {
+    const std::string sku = GetProperty("ro.boot.product.hardware.sku", "");
+    if (sku == "veux_global") {
+        model_property_override("veux", "Redmi Note 11 Pro 5G");
+    } 
+    if (sku == "veux_in")  {
+        model_property_override("veux", "Redmi Note 11 Pro 5G");
+    }
+    if (sku == "veux")  {
+        model_property_override("veux", "Redmi Note 11E Pro");
+    }
+    if (sku == "peux")  {
         model_property_override("peux", "Redmi Note 11 Pro+ 5G");
-    } else {
-        model_property_override("veux", "POCO X4 Pro");
+    }
+    if (sku == "veux_jp")  {
+        model_property_override("veux", "Redmi Note 11 Pro 5G");   
+    }
+    if (sku == "veux_p_global")  {
+        model_property_override("veux", "POCO X4 Pro 5G");
+    }
+    if (sku == "veux_p_in")  {
+        model_property_override("veux", "POCO X4 Pro 5G");
+    }
+    if (sku == "peux_p_in")  {
+        model_property_override("veux", "POCO X4 Pro 5G");
     }
 }
