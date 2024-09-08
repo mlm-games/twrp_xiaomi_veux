@@ -1,6 +1,6 @@
 #  TWRP Device Tree for Poco X4 Pro 5G (veux)
 
-## Does not work right now... WIP
+## Does not work right now... WIP (flash in vendor_boot and reboot to recovery for particular custom roms)
 
 The Poco X4 Pro 5G (codenamed "veux") is a mid-range smartphone from Xiaomi.(Flash in boot_a and b, for stock, vendor_boot for some custom roms)
 
