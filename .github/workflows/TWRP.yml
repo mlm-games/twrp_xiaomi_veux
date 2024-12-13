@@ -1,0 +1,125 @@
+name: TWRP
+
+on:
+  push:
+    branches:
+      - '**'   # Matches all branches
+    paths-ignore:
+      - 'README.md'
+  pull_request:
+    branches:
+      - '**'   # Matches all branches
+    paths-ignore:
+      - 'README.md'
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to build (default branch if not mentioned)'
+        required: false
+        default: ''
+        type: string
+      upload_releases:
+        description: 'Upload releases'
+        required: true
+        default: 'true'
+        type: boolean
+      mark_prerelease:
+        description: 'Mark as prerelease'
+        required: true
+        default: 'false'
+        type: boolean
+
+jobs:
+  build:
+    name: Build TWRP by ${{ github.actor }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      BRANCH_NAME: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref_name }}
+      UPLOAD_RELEASES: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.upload_releases || 'false' }}
+      MARK_PRERELEASE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.mark_prerelease || 'false' }}
+    steps:
+      - name: Clean Ubuntu
+        uses: rokibhasansagar/slimhub_actions@main
+
+      - name: Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 12
+
+      - name: Generate Build Info
+        id: build_info
+        run: |
+          echo "BUILD_DATE=$(date +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
+          echo "COMMIT_SHORT=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build TWRP Recovery
+        uses: mlm-games/TWRP-recovery-build-action@main
+        with:
+          DEVICE_TREE_BRANCH: ${{ env.BRANCH_NAME }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        if: inputs.upload_releases == false || github.event_name != 'workflow_dispatch'
+        with:
+          name: TWRP-Recovery-${{ env.DEVICE_NAME }}-${{ env.COMMIT_SHORT }}
+          path: |
+            ${{ env.OUTPUT_DIR }}/*.img
+            ${{ env.OUTPUT_DIR }}/*.tar
+            ${{ env.OUTPUT_DIR }}/*vbmeta*
+            ${{ env.OUTPUT_DIR }}/*.cpio
+            
+      - name: Upload to Release
+        if: github.event_name == 'workflow_dispatch' && env.UPLOAD_RELEASES == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ env.OUTPUT_DIR }}/*.img
+            ${{ env.OUTPUT_DIR }}/*.tar
+            ${{ env.OUTPUT_DIR }}/*vbmeta*
+            ${{ env.OUTPUT_DIR }}/ramdisk-recovery.*
+          name: "TWRP Recovery for ${{ env.DEVICE_NAME }} | ${{ env.BUILD_DATE }}"
+          tag_name: ${{ env.DEVICE_NAME }}-${{ env.COMMIT_SHORT }}
+          body: |
+            ## 📱 TWRP Recovery for ${{ env.DEVICE_NAME }}
+            
+            ### 📋 Build Information
+            - **Build Date**: ${{ env.BUILD_DATE }}
+            - **Branch**: `${{ env.BRANCH_NAME }}`
+            - **Commit**: [`${{ env.COMMIT_SHORT }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ env.COMMIT_SHORT }})
+            
+            ### 🔧 Device Information
+            - **Device Tree**: [${{ env.DEVICE_NAME }}](${{ env.DEVICE_TREE }}/tree/${{ env.BRANCH_NAME }})
+            
+            ### 📊 Checksums
+            ```
+            Image (IMG): ${{ env.MD5_IMG }}
+            Ramdisk: ${{ env.MD5_ZIP }}
+            ```
+            
+            ### ⚠️ Notes
+            - This is an unofficial build
+            - Please make sure to backup your data before flashing
+            - Flash at your own risk
+            
+            ### 🔍 Support
+            If you encounter any issues, please report them with:
+            - Detailed description of the problem
+            - Steps to reproduce
+            - Recovery logs
+            - Current ROM information
+          prerelease: ${{ env.MARK_PRERELEASE }}
+        continue-on-error: true
+
+      - name: Run LDCHECK
+        uses: mlm-games/ldcheck-action@main
+        with:
+          OUTPUT_DIR: ${{ env.OUTPUT_DIR }}
+          LDCHECKPATH: 'vendor/bin/teei_daemon'
+        continue-on-error: true
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf ${{ env.OUTPUT_DIR }}
